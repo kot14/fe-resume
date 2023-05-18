@@ -1,54 +1,33 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { onMounted } from "vue";
 
+import Modal from "./components/Modal.vue";
+import useResumeStore from "./stores/resume.store";
 import HeaderSection from "./components/HeaderSection.vue";
 import SkillSections from "./components/SkillsSection.vue";
-import LanguageSection, { ILanguage } from "./components/LanguageSection.vue";
-import FirebaseService from "./services/firebase.service";
-import ProjectsSections, { IProjects } from "./components/ProjectsSections.vue";
+import LanguageSection from "./components/LanguageSection.vue";
+import ProjectsSections from "./components/ProjectsSections.vue";
+import SkillModal from "./components/modal-components/SkillModal.vue";
+import useModalStore from "./stores/modal.store";
 
-export interface IUserInfo {
-  name: string;
-  jobRole: string;
-  email: string;
-  location: string;
-  additionalLinks: string[];
-  languages: ILanguage[];
-  skills: string[];
-  projects: IProjects[];
-}
-
-const defaultValues: IUserInfo = {
-  name: "Add your name in configurator",
-  jobRole: "",
-  email: "",
-  location: "",
-  additionalLinks: [],
-  languages: [],
-  skills: [],
-  projects: [],
-};
-
-const resumeData = ref<IUserInfo>();
+const resumeStore = useResumeStore();
+const modalStore = useModalStore();
 
 onMounted(() => {
-  FirebaseService.getResumeData()
-    .then((res) => {
-      resumeData.value = res.data() as IUserInfo;
-    })
-    .catch(() => {
-      resumeData.value = defaultValues;
-    });
+  resumeStore.getDataFromDB();
 });
 </script>
 
 <template>
   <div class="wrapper">
-    <HeaderSection :data="resumeData"></HeaderSection>
+    <HeaderSection></HeaderSection>
+    <Modal v-if="modalStore.currentModal">
+      <SkillModal v-if="modalStore.currentModal === 'skills'"></SkillModal>
+    </Modal>
     <div class="sections">
-      <SkillSections :skills="resumeData?.skills"></SkillSections>
-      <LanguageSection :languages="resumeData?.languages"></LanguageSection>
-      <ProjectsSections :projects="resumeData?.projects"></ProjectsSections>
+      <SkillSections></SkillSections>
+      <LanguageSection></LanguageSection>
+      <ProjectsSections></ProjectsSections>
     </div>
   </div>
 </template>
@@ -56,7 +35,9 @@ onMounted(() => {
 <style scoped lang="scss">
 .wrapper {
   padding: 10px;
+  position: relative;
 }
+
 .sections {
   display: flex;
   // gap: 50%;

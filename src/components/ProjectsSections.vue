@@ -4,7 +4,7 @@
     <div class="projects__list">
       <div
         class="projects__list-item"
-        v-for="(project, idx) of props.projects"
+        v-for="(project, idx) of projects"
         :key="idx"
       >
         <div class="header">
@@ -31,6 +31,9 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
+
+import useResumeStore from "../stores/resume.store";
 import SectionTitle from "./SectionTitle.vue";
 
 export interface IProjects {
@@ -40,7 +43,7 @@ export interface IProjects {
   text: string;
 }
 
-const props = defineProps<{ projects?: IProjects[] }>();
+const projects = computed(() => useResumeStore().resumeData?.projects);
 </script>
 
 <style scoped lang="scss">

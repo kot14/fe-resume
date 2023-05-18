@@ -1,8 +1,8 @@
 <template>
-  <div class="language" v-if="props.languages">
+  <div class="language" v-if="languages">
     <SectionTitle :text="'Languages'"></SectionTitle>
     <div class="language__list">
-      <div class="language__list-item" v-for="language of props.languages">
+      <div class="language__list-item" v-for="language of languages">
         <div class="language__list-item__type">
           <span class="s1"> {{ language.language }}</span>
           <span class="s2" v-if="language.experience">
@@ -23,7 +23,9 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { computed } from "vue";
+
+import useResumeStore from "../stores/resume.store";
 import SectionTitle from "./SectionTitle.vue";
 
 export interface ILanguage {
@@ -43,13 +45,7 @@ export interface ILanguageProps {
   languages?: ILanguage[];
 }
 
-const props = defineProps<ILanguageProps>();
-
-onMounted(() => {
-  setTimeout(() => {
-    console.log(props.languages);
-  }, 5000);
-});
+const languages = computed(() => useResumeStore().resumeData?.languages);
 </script>
 
 <style scoped lang="scss">

@@ -1,34 +1,37 @@
 <script setup lang="ts">
-import { IUserInfo } from "../App.vue";
+import { computed } from "vue";
+
+import useResumeStore from "../stores/resume.store";
 import HeaderLinkItem from "./HeaderLinkItem.vue";
 
-const props = defineProps<{ data?: IUserInfo }>();
+const resumeStore = computed(() => useResumeStore().resumeData);
+// const props = defineProps<{ data?: IUserInfo }>();
 </script>
 <template>
-  <div class="header" v-if="props.data">
+  <div class="header" v-if="resumeStore">
     <div class="header__name">
-      <span class="b1">{{ props.data.name.toUpperCase() }}</span>
+      <span class="b1">{{ resumeStore.name.toUpperCase() }}</span>
     </div>
     <div class="header__role">
       <span class="m1">
-        {{ props.data.jobRole }}
+        {{ resumeStore.jobRole }}
       </span>
     </div>
     <div class="header__links">
       <div class="header__links--main">
         <HeaderLinkItem
-          :text="props.data.email"
+          :text="resumeStore.email"
           :type="'mail'"
           :image-src="'src/assets/images/email.png'"
           :clickable="true"
         ></HeaderLinkItem>
         <HeaderLinkItem
-          :text="props.data.location"
+          :text="resumeStore.location"
           :image-src="'src/assets/images/location.png'"
         ></HeaderLinkItem>
       </div>
       <div class="header__links--additional">
-        <template v-for="link of props.data.additionalLinks">
+        <template v-for="link of resumeStore.additionalLinks">
           <HeaderLinkItem
             :text="link"
             :type="'site'"

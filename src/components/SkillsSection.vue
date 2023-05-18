@@ -1,22 +1,27 @@
 <template>
-  <div class="skill" v-if="props">
+  <div class="skill" v-if="skills">
     <SectionTitle :text="'Skills'"></SectionTitle>
     <div class="skill__items">
-      <div class="skill__item" v-for="skill of props.skills">
-        <span class="s1">{{ skill }}</span>
-      </div>
+      <template v-for="(skill, idx) of skills" :key="idx">
+        <SkillItem :skill="skill" :idx="idx"></SkillItem>
+      </template>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
+
+import useResumeStore from "../stores/resume.store";
 import SectionTitle from "./SectionTitle.vue";
+import SkillItem from "./SkillItem.vue";
 
-export interface ISkill {
-  skills?: string[];
-}
+// export interface ISkill {
+//   skill: string;
+//   idx: number;
+// }
 
-const props = defineProps<ISkill>();
+const skills = computed(() => useResumeStore().resumeData?.skills);
 </script>
 
 <style scoped lang="scss">
@@ -41,22 +46,6 @@ const props = defineProps<ISkill>();
     @media #{$md-screen} {
       padding: 13px 0;
       gap: 10px;
-    }
-  }
-  &__item {
-    background-color: var(--color-blue);
-    border-radius: 15px;
-    padding: 5px 10px;
-    min-width: 60px;
-    .s1 {
-      font-weight: 600;
-    }
-
-    @media #{$md-screen} {
-      padding: 3px 0px;
-      .s1 {
-        font-size: 12px;
-      }
     }
   }
 }
