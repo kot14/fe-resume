@@ -25,6 +25,15 @@ body {
   place-items: self-start;
   min-width: 320px;
   min-height: 100vh;
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    164deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(33, 37, 86, 1) 66%,
+    rgba(28, 64, 73, 1) 100%
+  );
+  color: var(--color-white);
+  font-family: "Roboto";
 }
 
 h1 {
@@ -44,7 +53,7 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: var(--color-purple);
 }
 button:focus,
 button:focus-visible {
@@ -68,7 +77,6 @@ button:focus-visible {
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #ffffff;
   }
   a:hover {
     color: #747bff;

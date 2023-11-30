@@ -14,7 +14,7 @@ const resumeStore = useResumeStore();
 const modalStore = useModalStore();
 
 onMounted(() => {
-  resumeStore.getDataFromDB();
+  console.log(resumeStore.getDataFromDB());
 });
 </script>
 
