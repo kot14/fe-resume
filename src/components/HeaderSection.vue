@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, watch } from "vue";
 
 import useResumeStore from "../stores/resume.store";
 import HeaderLinkItem from "./HeaderLinkItem.vue";
 
 const resumeStore = computed(() => useResumeStore().resumeData);
-// const props = defineProps<{ data?: IUserInfo }>();
+watch(resumeStore, (resume) => {
+  if (resume?.name) document.title = `${resume.name} resume`;
+});
 </script>
 <template>
   <div class="header" v-if="resumeStore">

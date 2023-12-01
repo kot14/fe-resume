@@ -1,13 +1,19 @@
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import db from "../components/firebase/init";
 
 const firebaseService = () => {
+  const docRef = doc(db, "resume", "userInfo");
   const getResumeData = () => {
-    const docRef = doc(db, "resume", "userInfo");
     const docSnap = getDoc(docRef);
     return docSnap;
   };
-  return { getResumeData };
+  const updateSkills = async (skills: string[]) => {
+    await updateDoc(docRef, {
+      skills: skills,
+    });
+    return skills;
+  };
+  return { getResumeData, updateSkills };
 };
 
 const FirebaseService = firebaseService();

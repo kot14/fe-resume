@@ -1,6 +1,6 @@
 <template>
   <div class="language" v-if="languages">
-    <SectionTitle :text="'Languages'"></SectionTitle>
+    <SectionTitle :text="'languages'"></SectionTitle>
     <div class="language__list">
       <div class="language__list-item" v-for="language of languages">
         <div class="language__list-item__type">
@@ -36,7 +36,8 @@ export interface ILanguage {
       | "Pre-intermediate"
       | "Intermediate"
       | "Upper-Intermediate"
-      | "Advanced";
+      | "Advanced"
+      | "Native";
     points: number;
   };
 }

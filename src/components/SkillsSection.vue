@@ -1,6 +1,6 @@
 <template>
   <div class="skill" v-if="skills">
-    <SectionTitle :text="'Skills'"></SectionTitle>
+    <SectionTitle :text="'skills'"></SectionTitle>
     <div class="skill__items">
       <template v-for="(skill, idx) of skills" :key="idx">
         <SkillItem :skill="skill" :idx="idx"></SkillItem>
@@ -15,11 +15,6 @@ import { computed } from "vue";
 import useResumeStore from "../stores/resume.store";
 import SectionTitle from "./SectionTitle.vue";
 import SkillItem from "./SkillItem.vue";
-
-// export interface ISkill {
-//   skill: string;
-//   idx: number;
-// }
 
 const skills = computed(() => useResumeStore().resumeData?.skills);
 </script>

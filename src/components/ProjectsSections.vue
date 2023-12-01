@@ -1,6 +1,6 @@
 <template>
   <div class="projects">
-    <SectionTitle :text="'Projects'"></SectionTitle>
+    <SectionTitle :text="'projects'"></SectionTitle>
     <div class="projects__list">
       <div
         class="projects__list-item"

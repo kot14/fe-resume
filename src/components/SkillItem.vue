@@ -8,7 +8,12 @@
     </span>
     <div class="skill__item-input-container" v-if="focused">
       <img src="src/assets/images/close.png" alt="" />
-      <input v-model="newSkill" v-auto-focus @keydown.enter="addSkill()" />
+      <input
+        class="s1"
+        v-model="newSkill"
+        v-auto-focus
+        @keydown.enter="addSkill()"
+      />
       <img src="src/assets/images/add.png" alt="" @click.stop="addSkill()" />
     </div>
 
@@ -46,17 +51,14 @@ const focusAction = (action?: string) => {
 
 const addSkill = () => {
   if (newSkill.value && newSkill.value.length > 0) {
-    resumeStore.resumeData?.skills.push(newSkill.value);
+    resumeStore.updateValues("skills", newSkill.value);
     toggle();
     newSkill.value = "";
   }
 };
 
 const deleteSkill = (idx: number) => {
-  if (resumeStore.resumeData?.skills)
-    resumeStore.resumeData.skills = resumeStore.resumeData?.skills.filter(
-      (_val, i) => i !== idx
-    );
+  resumeStore.deleteValues("skills", idx);
 };
 </script>
 
@@ -92,6 +94,8 @@ const deleteSkill = (idx: number) => {
       border-bottom: 1px solid gray;
       padding: 0 3px;
       width: 70%;
+      color: var(--color-white);
+      font-family: "roboto";
     }
   }
   @media #{$md-screen} {

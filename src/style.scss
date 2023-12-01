@@ -18,6 +18,15 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+// in work //
+// @keyframes bgAnimation {
+//   from {
+//     background-position: 100% 0;
+//   }
+
+//   to {
+//   }
+// }
 
 body {
   margin: 0;
@@ -34,6 +43,7 @@ body {
   );
   color: var(--color-white);
   font-family: "Roboto";
+  // animation: bgAnimation 9s linear infinite;
 }
 
 h1 {

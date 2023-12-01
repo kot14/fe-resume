@@ -1,7 +1,12 @@
 <template>
   <div class="section-title">
-    <div class="section-title__text-container">
-      <span class="m1">{{ props.text.toUpperCase() }}</span>
+    <div
+      class="section-title__text-container"
+      @click="() => openConfigModal(props.text)"
+    >
+      <span class="m1">{{
+        props.text ? props.text.toUpperCase() : "Choose a name"
+      }}</span>
       <img src="src/assets/images/config.png" alt="" />
     </div>
     <div class="section-title__bottom-line"></div>
@@ -9,7 +14,11 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{ text: string }>();
+import useModalStore, { modalType } from "../stores/modal.store";
+
+const props = defineProps<{ text: modalType }>();
+const openConfigModal = (type: modalType): void =>
+  useModalStore().modalActions(type);
 </script>
 
 <style scoped lang="scss">

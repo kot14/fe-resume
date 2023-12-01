@@ -16,6 +16,8 @@ export interface IUserInfo {
   projects: IProjects[];
 }
 
+export type configuratorTypes = "skills" | "languages" | "projects";
+
 const useResumeStore = defineStore("resumeStore", () => {
   const defaultValues: IUserInfo = {
     name: "Add your name in configurator",
@@ -40,7 +42,42 @@ const useResumeStore = defineStore("resumeStore", () => {
       });
   };
 
-  return { resumeData, getDataFromDB };
+  const updateValues = (type: configuratorTypes, value: string): void => {
+    if (resumeData.value)
+      switch (type) {
+        case "skills":
+          FirebaseService.updateSkills(
+            resumeData.value.skills.concat(value)
+          ).then(() => resumeData.value?.skills.push(value));
+
+          break;
+        case "languages":
+          break;
+        case "projects":
+          break;
+      }
+  };
+
+  const deleteValues = (type: configuratorTypes, deleteIdx: number) => {
+    if (resumeData.value)
+      switch (type) {
+        case "skills":
+          const filteredSkills: string[] = resumeData.value.skills.filter(
+            (_val, i) => i !== deleteIdx
+          );
+          FirebaseService.updateSkills(filteredSkills).then(() => {
+            if (resumeData.value?.skills)
+              resumeData.value.skills = filteredSkills;
+          });
+          break;
+        case "languages":
+          break;
+        case "projects":
+          break;
+      }
+  };
+
+  return { resumeData, getDataFromDB, updateValues, deleteValues };
 });
 
 export default useResumeStore;
